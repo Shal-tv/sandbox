@@ -30,4 +30,4 @@ jobs:
 
             -   name: Composer update
                 run: |
-                    sshpass -p "${{ secrets.SSH_PASSPHRASE }}" ssh -i -p ${{ secrets.SSH_PORT }} private_key -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "cd ${{ secrets.DEPLOY_PATH }} && composer update"
+                    sshpass -p "${{ secrets.SSH_PASSPHRASE }}" ssh -i "${{ secrets.SERVER_SSH_PRIVATE_KEY }}" -p ${{ secrets.SSH_PORT }} -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "cd ${{ secrets.DEPLOY_PATH }} && composer update"
