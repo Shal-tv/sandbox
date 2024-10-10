@@ -19,7 +19,7 @@ jobs:
             -   name: rsync deployments
                 uses: burnett01/rsync-deployments@7.0.1
                 with:
-                    switches: -avzr
+                    switches: -avzr --delete --exclude="vendor" --exclude="var" --exclude="bin" --exclude=".git"
                     path: /
                     remote_path: ${{ secrets.DEPLOY_PATH }}
                     remote_host: ${{ secrets.SERVER_HOST }}
@@ -27,7 +27,8 @@ jobs:
                     remote_user: ${{ secrets.SERVER_USER }}
                     remote_key: ${{ secrets.SERVER_SSH_PRIVATE_KEY }}
                     remote_key_pass: ${{ secrets.SSH_PASSPHRASE }}
+                    rsh: "composer update"
 
-            -   name: Composer update
-                run: |
-                    sshpass -p "${{ secrets.SSH_PASSPHRASE }}" ssh -i "${{ secrets.SERVER_SSH_PRIVATE_KEY }}" -p ${{ secrets.SSH_PORT }} -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "cd ${{ secrets.DEPLOY_PATH }} && composer update"
+#            -   name: Composer update
+#                run: |
+#                    sshpass -p "${{ secrets.SSH_PASSPHRASE }}" ssh -i "${{ secrets.SERVER_SSH_PRIVATE_KEY }}" -p ${{ secrets.SSH_PORT }} -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "cd ${{ secrets.DEPLOY_PATH }} && composer update"
