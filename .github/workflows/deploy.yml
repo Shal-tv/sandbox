@@ -1,0 +1,22 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    environment:
+      name: staging
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4.2.1
+
+    - name: Sync code to VPS
+      run: |
+        sshpass -p "${{ secrets.SSH_PASSPHRASE }}" rsync -avz --delete -e "ssh -o -i "${{ secrets.SERVER_SSH_PRIVATE_KEY }}" StrictHostKeyChecking=no" ./ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.SERVER_HOST }}
+        
