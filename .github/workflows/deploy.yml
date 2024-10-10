@@ -20,4 +20,4 @@ jobs:
                 run: |
                     echo ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.SERVER_HOST }}
                     echo ${{ secrets.SSH_PASSPHRASE }}
-                    sshpass -p "${{ secrets.SSH_PASSPHRASE }}" rsync -avz --delete -e 'ssh -o -p ${{ secrets.SSH_POT }} -i "${{ secrets.SERVER_SSH_PRIVATE_KEY }}"' ./ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.SERVER_HOST }}
+                    sshpass -p "${{ secrets.SSH_PASSPHRASE }}" rsync -avz --delete -e 'ssh -o -p 56450 -i "${{ secrets.SERVER_SSH_PRIVATE_KEY }}"' ./ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.SERVER_HOST }}
