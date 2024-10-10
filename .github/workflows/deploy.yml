@@ -27,8 +27,7 @@ jobs:
                     remote_user: ${{ secrets.SERVER_USER }}
                     remote_key: ${{ secrets.SERVER_SSH_PRIVATE_KEY }}
                     remote_key_pass: ${{ secrets.SSH_PASSPHRASE }}
-                    rsh: "composer update"
 
-#            -   name: Composer update
-#                run: |
-#                    sshpass -p "${{ secrets.SSH_PASSPHRASE }}" ssh -i "${{ secrets.SERVER_SSH_PRIVATE_KEY }}" -p ${{ secrets.SSH_PORT }} -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "cd ${{ secrets.DEPLOY_PATH }} && composer update"
+            -   name: Composer update
+                run: |
+                    sshpass -p "${{ secrets.SSH_PASSPHRASE }}" ssh -i "${{ secrets.SERVER_SSH_PRIVATE_KEY }}" -p ${{ secrets.SSH_PORT }} -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "cd ${{ secrets.DEPLOY_PATH }} && composer update"
