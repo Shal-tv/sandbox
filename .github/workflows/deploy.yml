@@ -18,4 +18,4 @@ jobs:
 
             -   name: Sync code to VPS
                 run: |
-                    sshpass -p "${{ secrets.SSH_PASSPHRASE }}" rsync -avz --delete -e "ssh -o -i ${{ secrets.SERVER_SSH_PRIVATE_KEY }} StrictHostKeyChecking=no" ./ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.SERVER_HOST }}
+                    sshpass -p "${{ secrets.SSH_PASSPHRASE }}" rsync -avz --delete -e "ssh -o -i "${{ secrets.SERVER_SSH_PRIVATE_KEY }}"" ./ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.SERVER_HOST }}
