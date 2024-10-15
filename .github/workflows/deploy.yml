@@ -21,16 +21,16 @@ jobs:
                 with:
                     switches: -avzr --delete --exclude="vendor" --exclude="var" --exclude="bin" --exclude=".git"
                     path: /
-                    remote_path: ${{ secrets.DEPLOY_PATH }}
+                    remote_path: ${{ secrets.SERVER_DEPLOY_PATH }}
                     remote_host: ${{ secrets.SERVER_HOST }}
-                    remote_port: ${{ secrets.SSH_PORT }}
+                    remote_port: ${{ secrets.SERVER_SSH_PORT }}
                     remote_user: ${{ secrets.SERVER_USER }}
                     remote_key: ${{ secrets.SERVER_SSH_PRIVATE_KEY }}
-                    remote_key_pass: ${{ secrets.SSH_PASSPHRASE }}
+                    remote_key_pass: ${{ secrets.SERVER_SSH_PASSPHRASE }}
 
             -   name: Composer update
                 run: |
-                    ssh -i "${{ secrets.SERVER_SSH_PRIVATE_KEY }}" -p ${{ secrets.SSH_PORT }} -o StrictHostKeyChecking=no IdentityFile="${{ secrets.SSH_PASSPHRASE }}" ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "cd ${{ secrets.DEPLOY_PATH }} && composer update"
+                    sshpass -p "${{ secrets.SERVER_SSH_PASSPHRASE }}" ssh -i "${{ secrets.SERVER_SSH_PRIVATE_KEY }}" -p ${{ secrets.SERVER_SSH_PORT }} -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "cd ${{ secrets.SERVER_DEPLOY_PATH }} && composer update"
 
     deploy-prod:
         needs: deploy-staging
@@ -48,13 +48,13 @@ jobs:
                 with:
                     switches: -avzr --delete --exclude="vendor" --exclude="var" --exclude="bin" --exclude=".git"
                     path: /
-                    remote_path: ${{ secrets.DEPLOY_PATH }}
+                    remote_path: ${{ secrets.SERVER_DEPLOY_PATH }}
                     remote_host: ${{ secrets.SERVER_HOST }}
-                    remote_port: ${{ secrets.SSH_PORT }}
+                    remote_port: ${{ secrets.SERVER_SSH_PORT }}
                     remote_user: ${{ secrets.SERVER_USER }}
                     remote_key: ${{ secrets.SERVER_SSH_PRIVATE_KEY }}
-                    remote_key_pass: ${{ secrets.SSH_PASSPHRASE }}
+                    remote_key_pass: ${{ secrets.SERVER_SSH_PASSPHRASE }}
 
             -   name: Composer update
                 run: |
-                    ssh -i "${{ secrets.SERVER_SSH_PRIVATE_KEY }}" -p ${{ secrets.SSH_PORT }} -o StrictHostKeyChecking=no IdentityFile="${{ secrets.SSH_PASSPHRASE }}" ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "cd ${{ secrets.DEPLOY_PATH }} && composer update"
+                    sshpass -p "${{ secrets.SERVER_SSH_PASSPHRASE }}" ssh -i "${{ secrets.SERVER_SSH_PRIVATE_KEY }}" -p ${{ secrets.SERVER_SSH_PORT }} -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "cd ${{ secrets.SERVER_DEPLOY_PATH }} && composer update"
