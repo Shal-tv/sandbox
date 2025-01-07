@@ -15,11 +15,9 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(path: '/healthcheck')]
 final class HealthcheckController extends AbstractController
 {
-
     #[Route(path: '/ping', name: 'ping', methods: ['GET'])]
-    public function pingAction() : Response
+    public function pingAction(): Response
     {
         return new JsonResponse('pong');
     }
-
 }
