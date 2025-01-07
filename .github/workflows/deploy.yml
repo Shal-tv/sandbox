@@ -39,7 +39,6 @@ jobs:
     deploy-prod:
         needs: deploy-staging
         runs-on: ubuntu-latest
-        if: success()
 
         environment:
             name: prod
