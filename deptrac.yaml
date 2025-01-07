@@ -7,15 +7,15 @@ parameters:
     layers:
         -   name: Controller
             collectors:
-                -   type: className
+                -   type: classLike
                     regex: .*Controller.*
         -   name: Service
             collectors:
-                -   type: className
+                -   type: classLike
                     regex: .*Service.*
         -   name: Repository
             collectors:
-                -   type: className
+                -   type: classLike
                     regex: .*Repository.*
     ruleset:
         Controller:
