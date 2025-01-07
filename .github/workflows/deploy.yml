@@ -34,7 +34,7 @@ jobs:
                     "export PATH=\$PATH:\$HOME/.config/composer/vendor/bin \
                     && cd ${{ secrets.SERVER_DEPLOY_PATH }} \
                     && composer update \
-                    && phpstan analyse src -vvv
+                    && phpstan analyse src -vvv \
                     && phpcs --standard=PSR12 -vvv src \
                     && deptrac analyse --verbose --fail-on-uncovered \
                     && phpmd src text cleancode,codesize,controversial,design -vvv"
