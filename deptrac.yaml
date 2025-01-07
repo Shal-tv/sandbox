@@ -1,5 +1,4 @@
-# deptrac.yaml
-parameters:
+deptrac:
     paths:
         - ./src
     exclude_files:
@@ -7,8 +6,8 @@ parameters:
     layers:
         -   name: Controller
             collectors:
-                -   type: classLike
-                    value: .*Controller.*
+                -   type: directory
+                    value: src/Controller/.*
         -   name: Service
             collectors:
                 -   type: classLike
@@ -17,8 +16,15 @@ parameters:
             collectors:
                 -   type: classLike
                     value: .*Repository.*
+        -   name: Symfony
+            collectors:
+                -   type: classLike
+                    value: .*Symfony.*
     ruleset:
         Controller:
             - Service
+            - Symfony
         Service:
             - Repository
+        Repository:
+            - Symfony
