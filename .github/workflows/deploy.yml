@@ -33,9 +33,11 @@ jobs:
                     sshpass -p "${{ secrets.SERVER_SSH_PASSPHRASE }}" ssh -p ${{ secrets.SERVER_SSH_PORT }} -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
                     "export PATH=\$PATH:\$HOME/.config/composer/vendor/bin \
                     && cd ${{ secrets.SERVER_DEPLOY_PATH }} \
-                    && composer update && phpcs --standard=PSR12 src \
-                    && deptrac analyse --fail-on-uncovered \
-                    && phpmd src text cleancode,codesize,controversial,design"
+                    && composer update \
+                    && phpstan analyse src tests -vvv
+                    && phpcs --standard=PSR12 -vvv src \
+                    && deptrac analyse --verbose --fail-on-uncovered \
+                    && phpmd src text cleancode,codesize,controversial,design -vvv"
 
     deploy-prod:
         needs: deploy-staging
