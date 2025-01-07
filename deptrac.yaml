@@ -6,8 +6,8 @@ deptrac:
     layers:
         -   name: Controller
             collectors:
-                -   type: directory
-                    value: src/Controller/.*
+                -   type: classLike
+                    value: .*Controller/.*
         -   name: Service
             collectors:
                 -   type: classLike
