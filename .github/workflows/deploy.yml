@@ -30,7 +30,7 @@ jobs:
 
             -   name: Composer update
                 run: |
-                    sshpass -p "${{ secrets.SERVER_SSH_PASSPHRASE }}" ssh -i "${{ secrets.SERVER_SSH_PRIVATE_KEY }}" -p ${{ secrets.SERVER_SSH_PORT }} -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "cd ${{ secrets.SERVER_DEPLOY_PATH }} && composer update"
+                    sshpass -p "${{ secrets.SERVER_SSH_PASSPHRASE }}" ssh -p ${{ secrets.SERVER_SSH_PORT }} -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "cd ${{ secrets.SERVER_DEPLOY_PATH }} && composer update"
 
             -   name: Run PHP Mess Detector (phpmd)
                 run: |
