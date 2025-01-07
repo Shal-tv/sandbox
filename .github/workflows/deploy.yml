@@ -34,7 +34,7 @@ jobs:
 
             -   name: Run PHP Mess Detector (phpmd)
                 run: |
-                    sshpass -p "${{ secrets.SERVER_SSH_PASSPHRASE }}" ssh -i "${{ secrets.SERVER_SSH_PRIVATE_KEY }}" -p ${{ secrets.SERVER_SSH_PORT }} -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "cd ${{ secrets.DEPLOY_PATH }} && phpmd src text cleancode,codesize,controversial,design"
+                    sshpass -p "${{ secrets.SERVER_SSH_PASSPHRASE }}" ssh -p ${{ secrets.SERVER_SSH_PORT }} -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "cd ${{ secrets.SERVER_DEPLOY_PATH }} && phpmd src text cleancode,codesize,controversial,design"
 
     deploy-prod:
         needs: deploy-staging
