@@ -28,21 +28,14 @@ jobs:
                     remote_key: ${{ secrets.SERVER_SSH_PRIVATE_KEY }}
                     remote_key_pass: ${{ secrets.SERVER_SSH_PASSPHRASE }}
 
-            -   name: Composer update
+            -   name: Run SSH Commands
                 run: |
-                    sshpass -p "${{ secrets.SERVER_SSH_PASSPHRASE }}" ssh -p ${{ secrets.SERVER_SSH_PORT }} -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "cd ${{ secrets.SERVER_DEPLOY_PATH }} && composer update"
-
-            -   name: Run PHP_CodeSniffer (phpcs)
-                run: |
-                    sshpass -p "${{ secrets.SERVER_SSH_PASSPHRASE }}" ssh -p ${{ secrets.SERVER_SSH_PORT }} -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "export PATH=\$PATH:\$HOME/.config/composer/vendor/bin && cd ${{ secrets.SERVER_DEPLOY_PATH }} && phpcs --standard=PSR12 src"
-
-            -   name: Run Deptrac
-                run: |
-                    sshpass -p "${{ secrets.SERVER_SSH_PASSPHRASE }}" ssh -p ${{ secrets.SERVER_SSH_PORT }} -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "export PATH=\$PATH:\$HOME/.config/composer/vendor/bin && cd ${{ secrets.SERVER_DEPLOY_PATH }} && deptrac analyse --fail-on-uncovered"
-
-            -   name: Run PHP Mess Detector (phpmd)
-                run: |
-                    sshpass -p "${{ secrets.SERVER_SSH_PASSPHRASE }}" ssh -p ${{ secrets.SERVER_SSH_PORT }} -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "export PATH=\$PATH:\$HOME/.config/composer/vendor/bin && cd ${{ secrets.SERVER_DEPLOY_PATH }} && phpmd src text cleancode,codesize,controversial,design"
+                    sshpass -p "${{ secrets.SERVER_SSH_PASSPHRASE }}" ssh -p ${{ secrets.SERVER_SSH_PORT }} -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
+                    "export PATH=\$PATH:\$HOME/.config/composer/vendor/bin \
+                    && cd ${{ secrets.SERVER_DEPLOY_PATH }} \
+                    && composer update && phpcs --standard=PSR12 src \
+                    && deptrac analyse --fail-on-uncovered \
+                    && phpmd src text cleancode,codesize,controversial,design"
 
     deploy-prod:
         needs: deploy-staging
@@ -70,4 +63,5 @@ jobs:
 
             -   name: Composer update
                 run: |
-                    sshpass -p "${{ secrets.SERVER_SSH_PASSPHRASE }}" ssh -p ${{ secrets.SERVER_SSH_PORT }} -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "cd ${{ secrets.SERVER_DEPLOY_PATH }} && composer update"
+                    sshpass -p "${{ secrets.SERVER_SSH_PASSPHRASE }}" ssh -p ${{ secrets.SERVER_SSH_PORT }} -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
+                    "cd ${{ secrets.SERVER_DEPLOY_PATH }} && composer update"
