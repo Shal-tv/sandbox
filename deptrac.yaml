@@ -8,15 +8,15 @@ parameters:
         -   name: Controller
             collectors:
                 -   type: classLike
-                    regex: .*Controller.*
+                    value: .*Controller.*
         -   name: Service
             collectors:
                 -   type: classLike
-                    regex: .*Service.*
+                    value: .*Service.*
         -   name: Repository
             collectors:
                 -   type: classLike
-                    regex: .*Repository.*
+                    value: .*Repository.*
     ruleset:
         Controller:
             - Service
